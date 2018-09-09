@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">    
+    <title>Document</title>
+</head>
+<body>
+    <div class='container-fluid'>
+        <div class="jumbotron">
+            <label for="basic-url">Capterra URL To Scrape</label>
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" id="url" aria-describedby="basic-addon3">
+            </div>
+            <button id="submitURL">Scrape It!</button>
+        </div>
+        <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Vendor Name</th>
+                  </tr>
+                </thead>
+                <tbody id='resultsTable'>
+                  
+                </tbody>
+              </table>
+
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>    
+    <script>
+        $(document).ready(
+            $('#submitURL').on("click", function(event) {
+                event.preventDefault()
+                var url = {
+                    address: $('#url').val().trim()
+                }
+                $.ajax({
+                    url: '/scrape',
+                    method: 'POST',
+                    data: url
+                }).then(function(response) {
+                    response.forEach(function(element,index) {
+                        $('#resultsTable').append(
+                            `<tr>
+                                <td>${index+1}</td>
+                                <td>${element.name}</td>
+                                <td>${element.vendor}</td>
+                            </tr>`
+                        )
+                    })
+                }) 
+            })
+        )
+    </script>
+</body>
+</html>
