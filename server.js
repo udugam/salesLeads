@@ -28,7 +28,8 @@ app.post('/scrape', function(req,res) {
         $('.listing').each(function() {
             var listing = {
                 name: $(this).find('.listing-name').text().trim(),
-                vendor: $(this).find('.listing-vendor').text().trim()
+                vendor: $(this).find('.listing-vendor').text().trim(),
+                description: $(this).find('.listing-description').text().trim()
             }
             results.push(listing)
         })
