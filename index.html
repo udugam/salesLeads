@@ -15,6 +15,7 @@
               <input type="text" class="form-control" id="url" aria-describedby="basic-addon3" placeholder="Must be in this format --> https://www.capterra.com/accounting-software/">
             </div>
             <button id="submitURL">Scrape It!</button>
+            <button id="downloadCSV">Download CSV (Comming Soon)</button> 
         </div>
         <table class="table">
                 <thead>
@@ -23,13 +24,13 @@
                     <th scope="col">Product Name</th>
                     <th scope="col">Vendor Name</th>
                     <th scope="col">Description</th>
-                  </tr>
-                </thead>
-                <tbody id='resultsTable'>
-                  
-                </tbody>
-              </table>
-
+                </tr>
+            </thead>
+            <tbody id='resultsTable'>
+                
+            </tbody>
+        </table>
+        
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>    
     <script>
@@ -55,8 +56,40 @@
                         )
                     })
                 }) 
+            }),
+
+            $('#downloadCSV').on("click", function(event) {
+                event.preventDefault()
+                //download_csv()
             })
         )
+        
+        
+
+        //This function will create the csv file for download
+        function download_csv() {
+            var data = [
+            ['Foo', 'programmer'],
+            ['Bar', 'bus driver'],
+            ['Moo', 'Reindeer Hunter']
+            ];
+
+            var csv = '#,Product Name, Vendor Name, Description\n';
+            data.forEach(function(row) {
+                    csv += row.join(',');
+                    csv += "\n";
+            });
+        
+            console.log(csv);
+            var hiddenElement = document.createElement('a');
+            hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+            hiddenElement.target = '_blank';
+            hiddenElement.download = 'people.csv';
+            hiddenElement.click();
+        }
     </script>
 </body>
 </html>
+
+
+ 
